@@ -14,6 +14,7 @@ const Fakestore = () => {
     const [searching, setSearching] = useState<any>([])
     const [numbers, setNumbers] = useState<any>([])
     const [order,setOrder] = useState<any>([])
+    const [catagory, setCatagory] = useState()
 
    
 
@@ -48,6 +49,17 @@ const Fakestore = () => {
         const ascOrder = await axios.get (`https://fakestoreapi.com/products?sort=${order}`)
         setProductList(ascOrder.data)
         
+    }
+
+    const catagoryHandle = async() => {
+     
+        const getCatagory = await axios.get (`https://fakestoreapi.com/products/category/${catagory}`)
+        console.log(getCatagory.data);
+    
+        setProductList(getCatagory.data)
+        
+
+
     }
 
   
@@ -87,6 +99,19 @@ const Fakestore = () => {
                 </Select> <Button onClick={() => onOrderHandler()} colorScheme='teal'>Go</Button>
 
 
+                <Select onChange={(e) => setCatagory(e.target.value)} placeholder='Catagories' width={"200px"}>
+
+                    
+                    <option value='electronics'>Electronics </option>
+                    <option value='jewelery'>Jewelery </option>
+                    <option value="Mens's clothing ">Men's Cothing </option>
+                    <option value="womens's clothing ">Women's Cothing </option>
+                   
+
+
+                </Select> <Button onClick={() => catagoryHandle()} colorScheme='teal'>Go</Button>
+
+
                 {/* <RadioGroup   paddingTop={2} paddingStart={2}>
 
                     <Stack direction='row'>
@@ -97,7 +122,7 @@ const Fakestore = () => {
                 </RadioGroup> */}
 
             </Box>
-            <SimpleGrid p={2} columns={4} paddingTop={10} >
+            <SimpleGrid p={2} columns={4} paddingTop={10} minChildWidth={"350px"}>
 
 
                 {
@@ -106,7 +131,7 @@ const Fakestore = () => {
 
 
 
-                            <Box border={"1px"} width={"350px"} justifyContent={"center"}>
+                            <Box  boxShadow={"md"} margin={2} width={"350px"} justifyContent={"center"}>
 
                                 <Image src={item.image} width={"200px"} />  <br />
 
@@ -126,7 +151,7 @@ const Fakestore = () => {
 
             </SimpleGrid>
             <Box m={"auto"} display={"flex"} width={"max-content"}>
-                <Button onClick={() => fakeApi()} colorScheme='teal'>Get Products</Button> </Box>
+                <Button onClick={() => fakeApi()} colorScheme='teal'>Get all products</Button> </Box>
         </div>
 
     )

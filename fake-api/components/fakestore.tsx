@@ -9,14 +9,14 @@ import { Input, Select, Radio, RadioGroup, Stack } from '@chakra-ui/react'
 
 const Fakestore = () => {
 
-    
+
     const [productsList, setProductList] = useState<any>([])
     const [searching, setSearching] = useState<any>([])
     const [numbers, setNumbers] = useState<any>([])
-    const [order,setOrder] = useState<any>([])
+    const [order, setOrder] = useState<any>([])
     const [catagory, setCatagory] = useState()
 
-   
+
 
     const fakeApi = async () => {
 
@@ -45,24 +45,41 @@ const Fakestore = () => {
 
 
 
-    const onOrderHandler = async() => {
-        const ascOrder = await axios.get (`https://fakestoreapi.com/products?sort=${order}`)
+    const onOrderHandler = async () => {
+        const ascOrder = await axios.get(`https://fakestoreapi.com/products?sort=${order}`)
         setProductList(ascOrder.data)
-        
+
     }
 
-    const catagoryHandle = async() => {
-     
-        const getCatagory = await axios.get (`https://fakestoreapi.com/products/category/${catagory}`)
+    const catagoryHandle = async () => {
+
+        const getCatagory = await axios.get(`https://fakestoreapi.com/products/category/${catagory}`)
         console.log(getCatagory.data);
-    
+
         setProductList(getCatagory.data)
-        
+    }
+
+
+
+    const addProduct = async () => {
+
+        const product = {
+            title: 'test product',
+            price: 13.5,
+            description: 'lorem ipsum set',
+            image: 'https://i.pravatar.cc',
+            category: 'electronic'
+           
+        }
+       
+        const add = await axios.post(`https://fakestoreapi.com/products`,{product})
+        console.log(add.data);
 
 
     }
 
-  
+   
+
     return (
         <div>
             <Box position={"fixed"} height={"50px"} width={"100%"} display={"flex"} bg={"teal"} justifyContent={"center"}>
@@ -88,12 +105,12 @@ const Fakestore = () => {
 
                 </Select> <Button onClick={() => onSelectHandler()} colorScheme='teal'>Go</Button>
 
-                
+
                 <Select onChange={(e) => setOrder(e.target.value)} placeholder='Select Order' width={"200px"}>
 
                     <option value='asc'>Ascending</option>
                     <option value='desc'>Descending </option>
-                   
+
 
 
                 </Select> <Button onClick={() => onOrderHandler()} colorScheme='teal'>Go</Button>
@@ -101,15 +118,16 @@ const Fakestore = () => {
 
                 <Select onChange={(e) => setCatagory(e.target.value)} placeholder='Catagories' width={"200px"}>
 
-                    
+
                     <option value='electronics'>Electronics </option>
                     <option value='jewelery'>Jewelery </option>
                     <option value="Mens's clothing ">Men's Cothing </option>
                     <option value="womens's clothing ">Women's Cothing </option>
-                   
+
 
 
                 </Select> <Button onClick={() => catagoryHandle()} colorScheme='teal'>Go</Button>
+                <Button onClick={() => addProduct()} colorScheme='teal'>Add Product</Button>
 
 
                 {/* <RadioGroup   paddingTop={2} paddingStart={2}>
@@ -126,12 +144,12 @@ const Fakestore = () => {
 
 
                 {
-                    productsList.map((item:any) => {
+                    productsList.map((item: any) => {
                         return (
 
 
 
-                            <Box  boxShadow={"md"} margin={2} width={"350px"} justifyContent={"center"}>
+                            <Box boxShadow={"md"} margin={2} width={"350px"} justifyContent={"center"}>
 
                                 <Image src={item.image} width={"200px"} />  <br />
 
